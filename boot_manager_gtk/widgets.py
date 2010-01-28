@@ -1,9 +1,10 @@
 # -*- coding: utf-8 -*-
 """includes widgets for boot manager gtk
 
-BootItem -
+BootItem - BootItem widget
+BootItemContainer - includes BootItem widgets (gtk.ScrolledWindow)
 NewButton -
-BootTimer -
+BootTimer - A widget for adjust boot timeout
 
 """
 #
@@ -95,7 +96,7 @@ class BootItem(gtk.Table):
 gobject.type_register(BootItem)
 
 class BootItemContainer(gtk.ScrolledWindow):
-    """includes BootItem widgets"""
+    """includes BootItem widgets (gtk.ScrolledWindow)"""
     def __init__(self, entries, callback_func):
         """init
         
@@ -143,3 +144,35 @@ class BootItemContainer(gtk.ScrolledWindow):
         self.vbox.pack_start(boot_item, expand=False, fill=False)
         self.vbox.show_all()
     
+class BootTimer(gtk.HBox):
+    """A widget for adjust boot timeout"""
+    def __init__(self, current_timeout):
+        """init
+
+        Arguments:
+        - `current_timeout`: current timeout
+        """
+        gtk.HBox.__init__(self, homogeneous=False, spacing=5)
+        self._default = current_timeout
+        self._create_ui()
+    def _create_ui(self):
+        #creates ui
+        self._info_lb = gtk.Label(_("Boot menu display time:"))
+        adj = gtk.Adjustment(value=self._default, lower=0, upper=1000,
+                             step_incr=1)
+        self._timeout_sb = gtk.SpinButton(adj)
+        self.apply_btn = gtk.Button(_("Apply"))
+        self.pack_start(self._info_lb, expand=False, fill=False)
+        self.pack_start(self._timeout_sb, expand=False, fill=False)
+        self.pack_start(self.apply_btn, expand=False, fill=False)
+    def set_timeout(self, value):
+        self._timeout_sb.set_value(value)
+        self._default = value
+    def listen_signal(self, func):
+        """listen apply_btn click signal
+
+        Arguments:
+        - `func`: callback_func
+        """
+        self.apply_btn.connect("clicked", func,
+                               self._timeout_sb.get_value)

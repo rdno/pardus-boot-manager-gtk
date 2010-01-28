@@ -21,6 +21,7 @@ import gobject
 
 from boot_manager_gtk.backend import Interface
 from boot_manager_gtk.translation import _
+from boot_manager_gtk.widgets import BootTimer
 from boot_manager_gtk.widgets import BootItemContainer
 
 from dbus.mainloop.glib import DBusGMainLoop
@@ -39,9 +40,16 @@ class BootManager(gtk.VBox):
     def _create_ui(self):
         #creates ui
         self.entries = self.iface.getEntries()
+        self.options =  self.iface.getOptions()
         self.container = BootItemContainer(self.entries,
                                            self.listen_boot_item_signals)
         self.pack_start(self.container, expand=True, fill=True)
+
+        hbox2 = gtk.HBox(homogeneous=False, spacing=5)
+        self.timer = BootTimer(int(self.options["timeout"]))
+        self.timer.listen_signal(self.on_timeout_change)
+        hbox2.pack_end(self.timer, expand=False, fill=False)
+        self.pack_start(hbox2, expand=False, fill=False)
         self.show_all()
     def listen_boot_item_signals(self, widget, data):
         """listen BootItem signals
@@ -62,3 +70,11 @@ class BootManager(gtk.VBox):
             print "edit"
         elif action == "delete":
             print "delete"
+    def on_timeout_change(self, widget, timeout):
+        """BootTimer apply button clicked
+
+        Arguments:
+        - `widget`: apply_btn of BootTimer
+        - `timeout`: function (usage: timeout())
+        """
+        self.iface.setOption("timeout", str(int(timeout())))
