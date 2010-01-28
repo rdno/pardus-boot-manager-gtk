@@ -25,29 +25,23 @@ from boot_manager_gtk.widgets import BootItemContainer
 
 from dbus.mainloop.glib import DBusGMainLoop
 
-class BootManager(gtk.Table):
+class BootManager(gtk.VBox):
     """BootManager main widget"""
     def __init__(self):
         """init"""
-        gtk.Table.__init__(self)
+        gtk.VBox.__init__(self, homogeneous=False, spacing=5)
         self._dbus_loop()
         self.iface = Interface()
-        self._set_style()
         self._create_ui()
     def _dbus_loop(self):
         #runs dbus main loop
         DBusGMainLoop(set_as_default = True)
-    def _set_style(self):
-        #sets style of Table
-        self.set_row_spacings(5)
-        self.set_col_spacings(5)
     def _create_ui(self):
         #creates ui
         self.entries = self.iface.getEntries()
         self.container = BootItemContainer(self.entries,
                                            self.listen_boot_item_signals)
-        self.attach(self.container, 0, 1, 0, 1,
-                    gtk.EXPAND|gtk.FILL, gtk.EXPAND|gtk.FILL)
+        self.pack_start(self.container, expand=True, fill=True)
         self.show_all()
     def listen_boot_item_signals(self, widget, data):
         """listen BootItem signals
