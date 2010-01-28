@@ -26,12 +26,9 @@ from boot_manager_gtk.widgets import BootItemContainer
 from dbus.mainloop.glib import DBusGMainLoop
 
 class BootManager(gtk.Table):
-    """BootManager main widget
-    """
-
+    """BootManager main widget"""
     def __init__(self):
-        """init
-        """
+        """init"""
         gtk.Table.__init__(self)
         self._dbus_loop()
         self.iface = Interface()
@@ -47,7 +44,27 @@ class BootManager(gtk.Table):
     def _create_ui(self):
         #creates ui
         self.entries = self.iface.getEntries()
-        self.container = BootItemContainer(self.entries, None)
+        self.container = BootItemContainer(self.entries,
+                                           self.listen_boot_item_signals)
         self.attach(self.container, 0, 1, 0, 1,
                     gtk.EXPAND|gtk.FILL, gtk.EXPAND|gtk.FILL)
         self.show_all()
+    def listen_boot_item_signals(self, widget, data):
+        """listen BootItem signals
+
+        Arguments:
+        - `widget`: widget
+        - `data`: {action:(make_default|edit|delete),
+                   props: (ex :{index:0,
+                          title:'Pardus',
+                          root:/dev/sda1,
+                          os_type:linux,
+                          default:True})}
+        """
+        action = data["action"]
+        if action == "make_default":
+            print "make_default"
+        elif action == "edit":
+            print "edit"
+        elif action == "delete":
+            print "delete"

@@ -75,6 +75,21 @@ class BootItem(gtk.Table):
         self.check_btn.set_active(self._props["default"])
         self._name_lb.set_markup("<b>"+self._props["title"]+"</b>")
         self._device_lb.set_label(self._props["root"])
+    def listen_signals(self, func):
+        """listen BootItem signals
+
+        Arguments:
+        - `func`: callback function
+        """
+        self.check_btn.connect("clicked", func,
+                               {"action":"make_default",
+                                "props":self._props})
+        self.edit_btn.connect("clicked", func,
+                              {"action":"edit",
+                               "props":self._props})
+        self.delete_btn.connect("clicked", func,
+                                {"action":"delete",
+                                 "props":self._props})
 
 gobject.type_register(BootItem)
 
@@ -124,6 +139,7 @@ class BootItemContainer(gtk.ScrolledWindow):
         - `props`: props
         """
         boot_item = BootItem(props)
+        boot_item.listen_signals(self._func)
         self.vbox.pack_start(boot_item, expand=False, fill=False)
         self.vbox.show_all()
     
