@@ -44,13 +44,8 @@ class BootItem(gtk.Table):
         """
         gtk.Table.__init__(self, rows=2, columns=5)
         self._props = props
-        self._set_style()
         self._create_ui()
         self._insert_data()
-    def _set_style(self):
-        #sets style of table
-        #self.set_column_spacings(5)
-        pass
     def _create_ui(self):
         self.check_btn = gtk.CheckButton()
 

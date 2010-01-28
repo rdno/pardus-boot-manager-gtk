@@ -1,6 +1,6 @@
 #!/usr/bin/python
 # -*- coding: utf-8 -*-
-"""inludes some useful functions
+"""inludes some useful functions and constants
 
 get_disk_by_UUID - get disk path by uuid
 """
@@ -31,3 +31,20 @@ def get_disk_by_uuid(uuid):
                                        readlink(uuid_p+"/%s" % uuid)))
     else:
         return uuid
+
+
+from boot_manager_gtk.translation import _
+EDIT_WINDOW_LABELS = {
+    "title":_("Title"),
+    "root":_("Disk"),
+    "kernel":_("Kernel"),
+    "initrd":_("Ramdisk File"),
+    "options":_("Boot Options")
+    }
+EDIT_WINDOW_INFOS = {
+    "title":_("Name of the boot entry to be shown at the boot menu."),
+    "root":_("Disk that contains operating system."),
+    "initrd": _("File that contains a micro operating system for preloading kernel modules."),
+    "kernel":_("Operating system kernel."),
+    "options":_("Boot options for operating system.")
+    }

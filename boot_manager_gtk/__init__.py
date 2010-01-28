@@ -23,6 +23,7 @@ from boot_manager_gtk.backend import Interface
 from boot_manager_gtk.translation import _
 from boot_manager_gtk.widgets import BootTimer
 from boot_manager_gtk.widgets import BootItemContainer
+from boot_manager_gtk.windows import EditWindow
 
 from dbus.mainloop.glib import DBusGMainLoop
 
@@ -33,20 +34,22 @@ class BootManager(gtk.VBox):
         gtk.VBox.__init__(self, homogeneous=False, spacing=5)
         self._dbus_loop()
         self.iface = Interface()
+        self.entries = self.iface.getEntries()
+        self.options =  self.iface.getOptions()
+        self.systems = self.iface.getSystems()
         self._create_ui()
     def _dbus_loop(self):
         #runs dbus main loop
         DBusGMainLoop(set_as_default = True)
     def _create_ui(self):
         #creates ui
-        self.entries = self.iface.getEntries()
-        self.options =  self.iface.getOptions()
         self.container = BootItemContainer(self.entries,
                                            self.listen_boot_item_signals)
         self.pack_start(self.container, expand=True, fill=True)
 
         hbox2 = gtk.HBox(homogeneous=False, spacing=5)
         self.timer = BootTimer(int(self.options["timeout"]))
+
         self.timer.listen_signal(self.on_timeout_change)
         hbox2.pack_end(self.timer, expand=False, fill=False)
         self.pack_start(hbox2, expand=False, fill=False)
@@ -64,10 +67,12 @@ class BootManager(gtk.VBox):
                           default:True})}
         """
         action = data["action"]
+        props = data["props"]
         if action == "make_default":
             print "make_default"
         elif action == "edit":
-            print "edit"
+            EditWindow(self.entries[props["index"]],
+                       self.on_edit).show()
         elif action == "delete":
             print "delete"
     def on_timeout_change(self, widget, timeout):
@@ -78,3 +83,13 @@ class BootManager(gtk.VBox):
         - `timeout`: function (usage: timeout())
         """
         self.iface.setOption("timeout", str(int(timeout())))
+    def on_edit(self, entry):
+        """on EditWindow ok_btn clicked"""
+        default = "no"
+        if entry.has_key("default"):
+            if entry["default"] == "yes":
+                default = "yes"
+        self.iface.setEntry(entry["title"], entry["os_type"],
+                            entry["root"], entry["kernel"],
+                            entry["initrd"], entry["options"],
+                            default, entry["index"])
