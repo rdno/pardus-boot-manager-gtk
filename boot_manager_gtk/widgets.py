@@ -27,6 +27,7 @@ import gtk
 import gobject
 
 from boot_manager_gtk.translation import _
+from boot_manager_gtk.utils import get_disk_by_uuid
 
 class BootItem(gtk.Table):
     """BootItem widget"""
@@ -122,8 +123,7 @@ class BootItemContainer(gtk.ScrolledWindow):
             if "root" in entry:
                 props["root"] = entry["root"]
             elif "uuid" in entry:
-                props["root"] = ""
-                print "TODO: getDiskbyuuid"
+                props["root"] = get_disk_by_uuid(entry["uuid"])
             else:
                 props["root"] = ""
             props["default"] = False
