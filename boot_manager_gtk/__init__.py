@@ -23,6 +23,7 @@ from boot_manager_gtk.backend import Interface
 from boot_manager_gtk.translation import _
 from boot_manager_gtk.widgets import BootTimer
 from boot_manager_gtk.widgets import BootItemContainer
+from boot_manager_gtk.widgets import NewButton
 from boot_manager_gtk.windows import EditWindow
 
 from dbus.mainloop.glib import DBusGMainLoop
@@ -43,16 +44,23 @@ class BootManager(gtk.VBox):
         DBusGMainLoop(set_as_default = True)
     def _create_ui(self):
         #creates ui
+        header = gtk.HBox(homogeneous=False, spacing=5)
+        self.new_btn = NewButton(self.systems)
+        self.new_btn.connect_clicked(self.on_new_btn)
+        header.pack_start(self.new_btn, expand=False, fill=False)
+        self.pack_start(header, expand=False, fill=False)
+
         self.container = BootItemContainer(self.entries,
                                            self.listen_boot_item_signals)
         self.pack_start(self.container, expand=True, fill=True)
 
-        hbox2 = gtk.HBox(homogeneous=False, spacing=5)
-        self.timer = BootTimer(int(self.options["timeout"]))
+        footer = gtk.HBox(homogeneous=False, spacing=5)
 
+        self.timer = BootTimer(int(self.options["timeout"]))
         self.timer.listen_signal(self.on_timeout_change)
-        hbox2.pack_end(self.timer, expand=False, fill=False)
-        self.pack_start(hbox2, expand=False, fill=False)
+
+        footer.pack_end(self.timer, expand=False, fill=False)
+        self.pack_start(footer, expand=False, fill=False)
         self.show_all()
     def listen_boot_item_signals(self, widget, data):
         """listen BootItem signals
@@ -93,3 +101,10 @@ class BootManager(gtk.VBox):
                             entry["root"], entry["kernel"],
                             entry["initrd"], entry["options"],
                             default, entry["index"])
+    def on_new_btn(self, name):
+        """on new button clicked and type of system selected
+
+        Arguments:
+        - `name`: system name
+        """
+        print "selected:", name

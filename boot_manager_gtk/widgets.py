@@ -171,3 +171,40 @@ class BootTimer(gtk.HBox):
         """
         self.apply_btn.connect("clicked", func,
                                self._timeout_sb.get_value)
+
+
+class NewButton(gtk.Button):
+    """NewButton"""
+    def __init__(self, systems):
+        """init
+
+        Arguments:
+        - `systems`: iface.getSystems()
+        """
+        gtk.Button.__init__(self)
+        self._systems = systems
+        self._func = None
+        self.menu = gtk.Menu()
+        self._set_style()
+        self._create_menu()
+        self.connect_object("event", self._open_menu,
+                            self.menu)
+    def _set_style(self):
+        self.set_label(_("Add New"))
+    def _create_menu(self):
+        for name in self._systems:
+            item = gtk.MenuItem(self._systems[name][0])
+            item.connect("activate", self._on_menu_item, name)
+            self.menu.append(item)
+            item.show()
+    def _open_menu(self, widget, event):
+        if event.type == gtk.gdk.BUTTON_PRESS:
+            widget.popup(None, None, None,
+                         event.button, event.time)
+    def _on_menu_item(self, widget, name):
+        if self._func == None:
+            print "use: NewButton.connect_clicked"
+            return False
+        self._func(name)
+    def connect_clicked(self, func):
+        self._func = func
