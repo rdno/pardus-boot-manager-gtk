@@ -34,7 +34,7 @@ class EditWindow(gtk.Window):
         - `callback_func`:a callback function for ok_btn clicked
         """
         gtk.Window.__init__(self)
-        self._entry = entry
+        self._entry = entry.copy()
         self._callback_func = callback_func
         self.widgets = {} #gtk.Entry widgets 
         self._set_style()
