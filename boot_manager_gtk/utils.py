@@ -48,3 +48,16 @@ EDIT_WINDOW_INFOS = {
     "kernel":_("Operating system kernel."),
     "options":_("Boot options for operating system.")
     }
+def dummy_entry(systems, name):
+    """returns a dummy entry using name
+
+    Arguments:
+    - `systems`: iface.getSystems()
+    - `name`: linux|windows|xen etc.
+    """
+    entry = {"title":"", "os_type":name, "index":-1}
+    for item in systems[name][1]:
+        entry[unicode(item)] = ""
+    for item in systems[name][2]:
+        entry[unicode(item)] = ""
+    return entry

@@ -21,6 +21,7 @@ import gobject
 
 from boot_manager_gtk.backend import Interface
 from boot_manager_gtk.translation import _
+from boot_manager_gtk.utils import dummy_entry
 from boot_manager_gtk.widgets import BootTimer
 from boot_manager_gtk.widgets import BootItemContainer
 from boot_manager_gtk.widgets import NewButton
@@ -82,7 +83,24 @@ class BootManager(gtk.VBox):
             EditWindow(self.entries[props["index"]],
                        self.on_edit).show()
         elif action == "delete":
-            print "delete"
+            m = _("Do you want to delete the entry '%s' ?") % \
+                props["title"]
+            dialog = gtk.MessageDialog(type=gtk.MESSAGE_WARNING,
+                                       buttons=gtk.BUTTONS_YES_NO,
+                                       message_format=m)
+            response = dialog.run()
+            if response == gtk.RESPONSE_YES:
+                try:
+                    self.iface.removeEntry(props["index"],
+                                           props["title"])
+                except Exception, e:
+                    self._on_exception(e)
+            dialog.destroy()
+    def _on_exception(self, e):
+        if "Comar.PolicyKit" in e._dbus_error_name:
+            self.open_error_dialog(_("Access Denied"))
+        else:
+            self.open_error_dialog(unicode(e))
     def on_timeout_change(self, widget, timeout):
         """BootTimer apply button clicked
 
@@ -91,20 +109,32 @@ class BootManager(gtk.VBox):
         - `timeout`: function (usage: timeout())
         """
         self.iface.setOption("timeout", str(int(timeout())))
-    def on_edit(self, entry):
+    def on_edit(self, entry, window):
         """on EditWindow ok_btn clicked"""
         default = "no"
         if entry.has_key("default"):
             if entry["default"] == "yes":
                 default = "yes"
-        self.iface.setEntry(entry["title"], entry["os_type"],
-                            entry["root"], entry["kernel"],
-                            entry["initrd"], entry["options"],
-                            default, entry["index"])
+        try:
+            self.iface.setEntry(entry["title"], entry["os_type"],
+                                entry["root"], entry["kernel"],
+                                entry["initrd"], entry["options"],
+                                default, entry["index"])
+            window.destroy()
+        except Exception, e:
+            self._on_exception(e)
     def on_new_btn(self, name):
         """on new button clicked and type of system selected
 
         Arguments:
         - `name`: system name
         """
-        print "selected:", name
+        EditWindow(dummy_entry(self.systems, name),
+                   self.on_edit).show()
+    def open_error_dialog(self, text):
+        """opens a error dialog"""
+        dialog = gtk.MessageDialog(type=gtk.MESSAGE_ERROR,
+                                   buttons=gtk.BUTTONS_OK,
+                                   message_format=text)
+        dialog.run()
+        dialog.destroy()

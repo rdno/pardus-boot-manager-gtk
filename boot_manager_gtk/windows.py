@@ -42,7 +42,10 @@ class EditWindow(gtk.Window):
         self._listen_signals()
     def _set_style(self):
         #sets style of EditWindow
-        self.set_title(_("Edit > %s") % self._entry["title"])
+        if self._entry["title"]:
+            self.set_title(_("Edit > %s") % self._entry["title"])
+        else:
+            self.set_title(_("New Entry"))
         self.set_modal(True)
         #self.set_default_size(500, 310)
     def _create_ui(self):
@@ -102,6 +105,5 @@ class EditWindow(gtk.Window):
             result = self._entry
             for opt in self.widgets.keys():
                 result[opt] = self.widgets[opt].get_text()
-            self._callback_func(result)
-            self.destroy()
+            self._callback_func(result, self)
         self.ok_btn.connect("clicked", on_ok)
