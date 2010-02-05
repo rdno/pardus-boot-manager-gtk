@@ -36,6 +36,7 @@ class BootManager(gtk.VBox):
         gtk.VBox.__init__(self, homogeneous=False, spacing=5)
         self._dbus_loop()
         self.iface = Interface()
+        self.iface.listenSignals(self.listen_comar_signals)
         self.entries = self.iface.getEntries()
         self.options =  self.iface.getOptions()
         self.systems = self.iface.getSystems()
@@ -138,3 +139,7 @@ class BootManager(gtk.VBox):
                                    message_format=text)
         dialog.run()
         dialog.destroy()
+    def listen_comar_signals(self, package, signal, args):
+        """listens comar signals"""
+        self.entries = self.iface.getEntries()
+        self.container.add_boot_items(self.entries)

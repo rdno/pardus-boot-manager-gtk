@@ -112,7 +112,12 @@ class BootItemContainer(gtk.ScrolledWindow):
     def _create_ui(self):
         self.vbox = gtk.VBox(spacing=5)
         self.add_with_viewport(self.vbox)
-        for index, entry in enumerate(self._entries):
+        self.add_boot_items(self._entries)
+    def add_boot_items(self, items):
+        self._entries = items
+        for child in self.vbox.get_children():
+            self.vbox.remove(child)
+        for index, entry in enumerate(items):
             props = {}
             props["index"] = index
             props["title"] = entry["title"]
