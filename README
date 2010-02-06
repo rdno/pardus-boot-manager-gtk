@@ -1,0 +1,11 @@
+Boot Manager GTK is port of Pardus' boot-manager
+
+To use:
+
+make mo files with:
+
+     $ make mo
+
+and start program:
+
+    $ python boot-manager-gtk.py
