@@ -79,7 +79,11 @@ class BootManager(gtk.VBox):
         action = data["action"]
         props = data["props"]
         if action == "make_default":
-            print "make_default"
+            try:
+                self.iface.setOption("default",
+                                     props["index"])
+            except Exception, e:
+                self._on_exception(e)
         elif action == "edit":
             EditWindow(self.entries[props["index"]],
                        self.on_edit).show()
@@ -109,7 +113,10 @@ class BootManager(gtk.VBox):
         - `widget`: apply_btn of BootTimer
         - `timeout`: function (usage: timeout())
         """
-        self.iface.setOption("timeout", str(int(timeout())))
+        try:
+            self.iface.setOption("timeout", str(int(timeout())))
+        except Exception, e:
+            self._on_exception(e)
     def on_edit(self, entry, window):
         """on EditWindow ok_btn clicked"""
         default = "no"
