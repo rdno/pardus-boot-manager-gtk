@@ -1,0 +1,9 @@
+# List of source files containing translatable strings.
+
+#Python Files
+boot-manager-gtk.py
+boot_manager_gtk/__init__.py
+boot_manager_gtk/widgets.py
+boot_manager_gtk/windows.py
+boot_manager_gtk/utils.py
+asma/addons/boot_manager.py

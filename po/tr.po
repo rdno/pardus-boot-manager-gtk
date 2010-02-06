@@ -1,0 +1,103 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: Boot Manager gtk\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2010-02-06 19:07+0200\n"
+"PO-Revision-Date: \n"
+"Last-Translator: Rıdvan Örsvuran <flasherdn@gmail.com>\n"
+"Language-Team:  <flasherdn@gmail.com>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+#: boot-manager-gtk.py:22
+#: asma/addons/boot_manager.py:28
+msgid "Boot Manager"
+msgstr "Açılış Yöneticisi"
+
+#: boot_manager_gtk/__init__.py:87
+#, python-format
+msgid "Do you want to delete the entry '%s' ?"
+msgstr "'%s' isimli girişi silmek istiyor musunuz?"
+
+#: boot_manager_gtk/__init__.py:102
+msgid "Access Denied"
+msgstr "Erişim Reddedildi"
+
+#: boot_manager_gtk/widgets.py:56
+msgid "Edit"
+msgstr "Düzenle"
+
+#: boot_manager_gtk/widgets.py:57
+msgid "Delete"
+msgstr "Sil"
+
+#: boot_manager_gtk/widgets.py:161
+msgid "Boot menu display time:"
+msgstr "Açılış menüsünün görüntüleneceği süre:"
+
+#: boot_manager_gtk/widgets.py:165
+msgid "Apply"
+msgstr "Uygula"
+
+#: boot_manager_gtk/widgets.py:210
+msgid "Add New"
+msgstr "Yeni Ekle"
+
+#: boot_manager_gtk/windows.py:46
+#, python-format
+msgid "Edit > %s"
+msgstr "Düzenle > %s"
+
+#: boot_manager_gtk/windows.py:48
+msgid "New Entry"
+msgstr "Yeni Giriş"
+
+#: boot_manager_gtk/windows.py:57
+msgid "OK"
+msgstr "Tamam"
+
+#: boot_manager_gtk/windows.py:58
+msgid "Cancel"
+msgstr "İptal"
+
+#: boot_manager_gtk/utils.py:38
+msgid "Title"
+msgstr "Başlık"
+
+#: boot_manager_gtk/utils.py:39
+msgid "Disk"
+msgstr "Disk"
+
+#: boot_manager_gtk/utils.py:40
+msgid "Kernel"
+msgstr "Çekirdek"
+
+#: boot_manager_gtk/utils.py:41
+msgid "Ramdisk File"
+msgstr "Ramdisk Dosyası"
+
+#: boot_manager_gtk/utils.py:42
+msgid "Boot Options"
+msgstr "Açılış Seçenekleri"
+
+#: boot_manager_gtk/utils.py:45
+msgid "Name of the boot entry to be shown at the boot menu."
+msgstr "Açılış menüsünde gösterilecek metin."
+
+#: boot_manager_gtk/utils.py:46
+msgid "Disk that contains operating system."
+msgstr "İşletim sistemini bulunduğu disk."
+
+#: boot_manager_gtk/utils.py:47
+msgid "File that contains a micro operating system for preloading kernel modules."
+msgstr "Çekirdek bileşenlerini önyükleyecek bir mikro işletim sistemi içeren dosya."
+
+#: boot_manager_gtk/utils.py:48
+msgid "Operating system kernel."
+msgstr "İşletim sistemi çekirdeği."
+
+#: boot_manager_gtk/utils.py:49
+msgid "Boot options for operating system."
+msgstr "İşletim sisteminin açılış seçenekleri."
+

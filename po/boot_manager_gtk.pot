@@ -1,0 +1,108 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2010-02-06 19:07+0200\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=CHARSET\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+#: boot-manager-gtk.py:22 asma/addons/boot_manager.py:28
+msgid "Boot Manager"
+msgstr ""
+
+#: boot_manager_gtk/__init__.py:87
+#, python-format
+msgid "Do you want to delete the entry '%s' ?"
+msgstr ""
+
+#: boot_manager_gtk/__init__.py:102
+msgid "Access Denied"
+msgstr ""
+
+#: boot_manager_gtk/widgets.py:56
+msgid "Edit"
+msgstr ""
+
+#: boot_manager_gtk/widgets.py:57
+msgid "Delete"
+msgstr ""
+
+#: boot_manager_gtk/widgets.py:161
+msgid "Boot menu display time:"
+msgstr ""
+
+#: boot_manager_gtk/widgets.py:165
+msgid "Apply"
+msgstr ""
+
+#: boot_manager_gtk/widgets.py:210
+msgid "Add New"
+msgstr ""
+
+#: boot_manager_gtk/windows.py:46
+#, python-format
+msgid "Edit > %s"
+msgstr ""
+
+#: boot_manager_gtk/windows.py:48
+msgid "New Entry"
+msgstr ""
+
+#: boot_manager_gtk/windows.py:57
+msgid "OK"
+msgstr ""
+
+#: boot_manager_gtk/windows.py:58
+msgid "Cancel"
+msgstr ""
+
+#: boot_manager_gtk/utils.py:38
+msgid "Title"
+msgstr ""
+
+#: boot_manager_gtk/utils.py:39
+msgid "Disk"
+msgstr ""
+
+#: boot_manager_gtk/utils.py:40
+msgid "Kernel"
+msgstr ""
+
+#: boot_manager_gtk/utils.py:41
+msgid "Ramdisk File"
+msgstr ""
+
+#: boot_manager_gtk/utils.py:42
+msgid "Boot Options"
+msgstr ""
+
+#: boot_manager_gtk/utils.py:45
+msgid "Name of the boot entry to be shown at the boot menu."
+msgstr ""
+
+#: boot_manager_gtk/utils.py:46
+msgid "Disk that contains operating system."
+msgstr ""
+
+#: boot_manager_gtk/utils.py:47
+msgid ""
+"File that contains a micro operating system for preloading kernel modules."
+msgstr ""
+
+#: boot_manager_gtk/utils.py:48
+msgid "Operating system kernel."
+msgstr ""
+
+#: boot_manager_gtk/utils.py:49
+msgid "Boot options for operating system."
+msgstr ""
