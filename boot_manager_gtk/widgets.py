@@ -155,6 +155,7 @@ class BootTimer(gtk.HBox):
         gtk.HBox.__init__(self, homogeneous=False, spacing=5)
         self._default = current_timeout
         self._create_ui()
+        self._listen_signals()
     def _create_ui(self):
         #creates ui
         self._info_lb = gtk.Label(_("Boot menu display time:"))
@@ -162,12 +163,23 @@ class BootTimer(gtk.HBox):
                              step_incr=1)
         self._timeout_sb = gtk.SpinButton(adj)
         self.apply_btn = gtk.Button(_("Apply"))
+        self.apply_btn.set_sensitive(False)
         self.pack_start(self._info_lb, expand=False, fill=False)
         self.pack_start(self._timeout_sb, expand=False, fill=False)
         self.pack_start(self.apply_btn, expand=False, fill=False)
     def set_timeout(self, value):
         self._timeout_sb.set_value(value)
         self._default = value
+    def _listen_signals(self):
+        #private signals
+        def callback_func(widget):
+            #if timeout value is equal to default then
+            #no need to apply
+            if widget.get_value() == self._default:
+                self.apply_btn.set_sensitive(False)
+            else:
+                self.apply_btn.set_sensitive(True)
+        self._timeout_sb.connect("value-changed", callback_func)
     def listen_signal(self, func):
         """listen apply_btn click signal
 
